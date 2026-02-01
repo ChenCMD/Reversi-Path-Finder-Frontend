@@ -15,15 +15,55 @@ export const EMPTY: Cell = 0
 export const WHITE: Cell = 1
 export const BLACK: Cell = 2
 
+export type Origin = [number, number]
+
+export const DEFAULT_ORIGIN: Origin = [2, 2]
+
 export const createMatrix = <T,>(value: T): T[][] =>
   Array.from({ length: SIZE }, () => Array.from({ length: SIZE }, () => value))
 
-export const createInitialBoard = (): Board => {
+export const isValidOrigin = (origin: Origin): boolean => {
+  const [x, y] = origin
+  return x >= 0 && x <= SIZE - 2 && y >= 0 && y <= SIZE - 2
+}
+
+export const clampOrigin = (origin: Origin | undefined): Origin => {
+  if (!origin) return DEFAULT_ORIGIN
+  return isValidOrigin(origin) ? origin : DEFAULT_ORIGIN
+}
+
+export const originToString = (origin: Origin): string => {
+  const [x, y] = origin
+  return `${String.fromCharCode(65 + x)}${y + 1}`
+}
+
+export const stringToOrigin = (value: string | null | undefined): Origin | null => {
+  if (!value || value.length !== 2) return null
+  const normalized = value.toUpperCase()
+  const col = normalized.charCodeAt(0) - 65
+  const row = normalized.charCodeAt(1) - 49
+  if (Number.isNaN(col) || Number.isNaN(row)) return null
+  const origin: Origin = [col, row]
+  return isValidOrigin(origin) ? origin : null
+}
+
+export const initialBlockCells = (origin: Origin): [number, number][] => {
+  const [x, y] = clampOrigin(origin)
+  return [
+    [x, y],
+    [x + 1, y],
+    [x, y + 1],
+    [x + 1, y + 1],
+  ]
+}
+
+export const createInitialBoard = (origin: Origin = DEFAULT_ORIGIN): Board => {
+  const [x, y] = clampOrigin(origin)
   const board = createMatrix<Cell>(EMPTY)
-  board[2][2] = WHITE
-  board[3][3] = WHITE
-  board[2][3] = BLACK
-  board[3][2] = BLACK
+  board[y][x] = WHITE
+  board[y + 1][x + 1] = WHITE
+  board[y][x + 1] = BLACK
+  board[y + 1][x] = BLACK
   return board
 }
 
@@ -174,9 +214,9 @@ export const parseProgression = (
   return tokens
 }
 
-export const computeSteps = (progression: string): Step[] => {
+export const computeSteps = (progression: string, origin: Origin = DEFAULT_ORIGIN): Step[] => {
   const steps: Step[] = []
-  let board = createInitialBoard()
+  let board = createInitialBoard(origin)
   let player: Cell = BLACK
   steps.push({ board, player, move: null, pass: false, index: 0 })
 

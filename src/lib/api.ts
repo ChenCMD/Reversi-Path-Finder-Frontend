@@ -5,9 +5,18 @@ export type SolveResult = {
   error?: string
 }
 
+export type SolveInputPayload = {
+  origin: string
+  whiteBoard: string
+  blackBoard: string
+  blackMask: string
+  whiteMask: string
+}
+
 export type SolveJobAccepted = {
   jobId: string
   status: 'queued' | 'running'
+  input?: SolveInputPayload
 }
 
 export type SolveJobView = {
@@ -15,6 +24,7 @@ export type SolveJobView = {
   status: 'queued' | 'running' | 'finished' | 'error'
   result?: SolveResult
   error?: string
+  input?: SolveInputPayload
 }
 
 const apiBase = (() => {
