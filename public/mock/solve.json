@@ -1,0 +1,19 @@
+{
+  "jobId": "8386b629-8d0a-47ea-a280-62aced1493ab",
+  "status": 200,
+  "data": {
+    "jobId": "8386b629-8d0a-47ea-a280-62aced1493ab",
+    "status": "finished",
+    "result": {
+      "status": "reachable",
+      "progression": "B3B2D5E3F2B5D2E2B4F3F1D1A1B1A2C2E1A4A3C5D6E4A5A6E5F4C6B6C1E6F5F6",
+      "raw": "Adding 293 constraints to solver...\nConstraints asserted in 14.60s\nChecking satisfiability...\nSatisfiability check completed in 87.63s\n{\"bin\":\"solve_from_octal\",\"input\":{\"black_board_octal\":\"777757437500\",\"black_mask_octal\":\"534564304714\",\"white_board_octal\":\"000020340277\",\"white_mask_octal\":\"243213473063\"},\"progression\":\"B3B2D5E3F2B5D2E2B4F3F1D1A1B1A2C2E1A4A3C5D6E4A5A6E5F4C6B6C1E6F5F6\",\"status\":\"reachable\"}\n"
+    },
+    "input": {
+      "whiteBoard": "000020340277",
+      "blackBoard": "777757437500",
+      "blackMask": "534564304714",
+      "whiteMask": "243213473063"
+    }
+  }
+}
